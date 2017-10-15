@@ -3,6 +3,8 @@ class Node:
     def __init__(self, value, next):
         self.value = value
         self.next = next
+
+
     def __str__(self):
         return str(self.value)
 #NODE
@@ -25,6 +27,8 @@ class LinkedList:
             newNode = Node(value, self.head)
             self.head = newNode
         self.length += 1
+
+
     def insertAtTail(self, value):
         if self.head is None:
             self.head = Node(value, None)
@@ -33,6 +37,8 @@ class LinkedList:
             newNode = Node(value, None)
             tail.next = newNode
         self.length += 1
+
+
     def insertAt(self, value, position):
         if position < 0 or position > self.length:
             return False
@@ -47,6 +53,8 @@ class LinkedList:
             previousNode.next = newNode
 
             self.length += 1
+
+
     def remove(self, node):
         position = self.getPosition(node)
         self.removeAt(position)
@@ -64,6 +72,8 @@ class LinkedList:
             node.next = nodeToRemove.next
         del nodeToRemove
         self.length -= 1
+
+
     def getPosition(self, node):
         temp = self.head
         position = 0
@@ -72,6 +82,8 @@ class LinkedList:
             position += 1
             temp = temp.next
         return -1
+
+
     def getAt(self, position, count=1):
         temp = self.head 
         if position > self.length: return None
@@ -86,13 +98,19 @@ class LinkedList:
                     temp = temp.next
                     if temp is None: break
                 return nodes
+
+
     def getFirstMatch(self, value):
         temp = self.head
         while temp.next is not None:
             if temp.value == value: return temp
             temp = temp.next
+
+
     def isEmpty(self):
         return self.head is None
+
+
     def reverse(self):
         if self.length is 0 or self.length is 1: return
 
@@ -110,6 +128,23 @@ class LinkedList:
             else:
                 nextNode = currentNode.next
         self.head = previousNode
+
+
+    def reverseRecursive(self):
+        def recursiveReverse(self, previous, current, next):
+            if self.head == None: 
+                return
+            elif current.next == None:
+                current.next = previous
+                self.head = current
+                return
+            else:
+                current.next = previous
+                recursiveReverse(self, current, next, next.next)
+
+        recursiveReverse(self, None, self.head, self.head.next)
+
+
     def print(self):
         temp = self.head
         while temp is not None:
@@ -125,6 +160,8 @@ class LinkedList:
             print(temp.value, end=('\n' if temp.next is None else ' -> '))
             temp = temp.next
         return ''
+
+
     def __len__(self):
         return self.length
     #MAGICAL METHODS

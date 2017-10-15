@@ -229,13 +229,41 @@ class DoublyLinkedList:
     def insertAtTail(self, value):
         self.insertAt(self.length, value)
     def remove(self, node):
-        pass
+        position = self.getNodePosition(node.value)
+        self.removeAt(position)
     def removeAt(self, position):
-        pass
+        if position >= self.length: print('INVALID POSITION')
+        elif self.length == 1:
+            del self.head
+            self.head = None
+        elif position == 0:
+            current = self.head
+            next = self.head.next
+            next.prev = None
+            self.head = next
+
+            del current
+        elif position == self.length - 1:
+            prev = self.getNodeAt(position - 1)
+            current = prev.next
+            prev.next = None
+            self.tail = prev
+
+            del current
+        else: 
+            prev = self.getNodeAt(position - 1)
+            current = prev.next
+            next = current.next
+
+            prev.next = next
+            next.prev = prev
+            del current
+
+        self.length -= 1
     def removeHead(self):
-        pass
-    def remmoveTail(self):
-        pass
+        self.removeAt(0)
+    def removeAtTail(self):
+        self.remoteAt(self.length - 1)
     def getNodeAt(self, position):
         if position >= self.length: return
 

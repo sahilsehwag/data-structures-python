@@ -170,7 +170,7 @@ class LinkedList:
 class DoublyLinkedList:
     #NODE
     class Node:
-        def __init__(self, value, next, prev):
+        def __init__(self, value, prev, next):
             self.value = value
             self.next = next
             self.prev = prev
@@ -189,12 +189,45 @@ class DoublyLinkedList:
 
 
     #METHODS
-    def insertAt(self, value):
-        pass
+    def insertAt(self, position, value):
+        if position > self.length:
+            print('INVALID POSITION')
+            return
+        elif self.head is None:
+            newNode = self.Node(value, None, None)
+            self.head = newNode
+        elif self.length == 1:
+            if position == 0:
+                newNode = self.Node(value, None, self.head)
+                self.tail = self.head
+                self.head = newNode
+                self.tail.prev = newNode
+            else:
+                newNode = self.Node(value, self.head, None)
+                self.tail = newNode
+                self.head.next = self.tail
+        elif position == 0:
+            newNode = self.Node(value, None, self.head)
+            self.head = newNode
+        elif position == self.length:
+            newNode = self.Node(value, self.tail, None)
+            self.tail.next = newNode
+            self.tail = newNode
+        else:
+            previous = self.getNodeAt(position - 1)
+            next = previous.next
+
+            newNode = self.Node(value, previous, next)
+            previous.next = newNode
+            next.prev = newNode
+
+        self.length += 1
+
+
     def insertAtHead(self, value):
-        pass
+        self.insertAt(0, value)
     def insertAtTail(self, value):
-        pass
+        self.insertAt(self.length, value)
     def remove(self, node):
         pass
     def removeAt(self, position):
@@ -204,9 +237,23 @@ class DoublyLinkedList:
     def remmoveTail(self):
         pass
     def getNodeAt(self, position):
-        pass
-    def getNodePosition(self, node):
-        pass
+        if position >= self.length: return
+
+        temp = self.head
+        for _ in range(position):
+            temp = temp.next
+        return temp
+
+
+    def getNodePosition(self, value):
+        temp = self.head
+
+        for i in range(self.length):
+            if temp.value == value: return i
+
+        return None
+
+
     def reverse(self):
         previous = None
         current = self.head
@@ -229,6 +276,8 @@ class DoublyLinkedList:
 
     def recursiveReverse(self):
         self._recursiveReverse(None, self.head, self.head.next)
+    def isEmpty(self):
+        return self.length == 0
     #METHODS
 
     #PRIVATE METHODS

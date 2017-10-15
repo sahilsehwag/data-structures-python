@@ -1,17 +1,19 @@
-#NODE
-class Node:
-    def __init__(self, value, next):
-        self.value = value
-        self.next = next
-
-
-    def __str__(self):
-        return str(self.value)
-#NODE
 
 
 #SINGLY LINKED LIST
 class LinkedList:
+    #NODE
+    class Node:
+        def __init__(self, value, next):
+            self.value = value
+            self.next = next
+
+
+        def __str__(self):
+            return str(self.value)
+    #NODE
+
+
     #CONSTRUCTOR
     def __init__(self):
         self.head = None
@@ -131,26 +133,22 @@ class LinkedList:
 
 
     def reverseRecursive(self):
-        def recursiveReverse(self, previous, current, next):
-            if self.head == None: 
-                return
-            elif current.next == None:
-                current.next = previous
-                self.head = current
-                return
-            else:
-                current.next = previous
-                recursiveReverse(self, current, next, next.next)
-
-        recursiveReverse(self, None, self.head, self.head.next)
-
-
-    def print(self):
-        temp = self.head
-        while temp is not None:
-            print(temp.value, end=('\n' if temp.next is None else ' -> '))
-            temp = temp.next
+        self._recursiveReverse(None, self.head, self.head.next)
     #METHODS
+
+
+    #PRIVATE METHODS
+    def _recursiveReverse(self, previous, current, next):
+        if self.head == None: 
+            return
+        elif current.next == None:
+            current.next = previous
+            self.head = current
+            return
+        else:
+            current.next = previous
+            self._recursiveReverse(self, current, next, next.next)
+    #PRIVATE METHODS
 
 
     #MAGICAL METHODS
@@ -170,6 +168,18 @@ class LinkedList:
 
 #DOUBLY LINKED LIST
 class DoublyLinkedList:
+    #NODE
+    class Node:
+        def __init__(self, value, next, prev):
+            self.value = value
+            self.next = next
+            self.prev = prev
+
+        def __str__(self):
+            return str(self.value)
+    #NODE
+
+
     #CONSTRUCTOR
     def __init__(self):
         self.head = None
@@ -179,7 +189,52 @@ class DoublyLinkedList:
 
 
     #METHODS
+    def insertAt(self, value):
+        pass
+    def insertAtHead(self, value):
+        pass
+    def insertAtTail(self, value):
+        pass
+    def remove(self, node):
+        pass
+    def removeAt(self, position):
+        pass
+    def removeHead(self):
+        pass
+    def remmoveTail(self):
+        pass
+    def getNodeAt(self, position):
+        pass
+    def getNodePosition(self, node):
+        pass
+    def reverse(self):
+        previous = None
+        current = self.head
+        next = current.next
+
+        while True:
+            if self.head == None: 
+                return
+            elif current.next == None:
+                current.next = previous
+                self.head = current
+                return
+            else:
+                current.next = previous
+
+                previous = current
+                current = next
+                next = next.next
+
+
+    def recursiveReverse(self):
+        self._recursiveReverse(None, self.head, self.head.next)
     #METHODS
+
+    #PRIVATE METHODS
+    def _recursiveReverse(self):
+        pass
+    #PRIVATE METHODS
 
 
     #MAGICAL METHODS

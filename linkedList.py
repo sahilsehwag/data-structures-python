@@ -8,7 +8,6 @@ class LinkedList:
             self.value = value
             self.next = next
 
-
         def __str__(self):
             return str(self.value)
     #NODE
@@ -24,19 +23,19 @@ class LinkedList:
     #METHODS
     def insertAtHead(self, value):
         if self.head is None:
-            self.head = Node(value, None)
+            self.head = self.Node(value, None)
         else:
-            newNode = Node(value, self.head)
+            newNode = self.Node(value, self.head)
             self.head = newNode
         self.length += 1
 
 
     def insertAtTail(self, value):
         if self.head is None:
-            self.head = Node(value, None)
+            self.head = self.Node(value, None)
         else:
-            tail = self.getAt(self.length - 1)
-            newNode = Node(value, None)
+            tail = self.getNodeAt(self.length - 1)
+            newNode = self.Node(value, None)
             tail.next = newNode
         self.length += 1
 
@@ -49,9 +48,9 @@ class LinkedList:
         elif position is self.length:
             self.insertAtTail(value)
         else:
-            previousNode = self.getAt(position - 1)
+            previousNode = self.getNodeAt(position - 1)
             nextNode = previousNode.next
-            newNode = Node(value, nextNode)
+            newNode = self.Node(value, nextNode)
             previousNode.next = newNode
 
             self.length += 1
@@ -65,11 +64,11 @@ class LinkedList:
             nodeToRemove = self.head
             self.head = self.head.next
         elif position is self.length - 1:
-            prevNode = self.getAt(position - 1)
+            prevNode = self.getNodeAt(position - 1)
             nodeToRemove = prevNode.next
             prevNode.next = None
         else:
-            node = self.getAt(position - 1)
+            node = self.getNodeAt(position - 1)
             nodeToRemove = node.next
             node.next = nodeToRemove.next
         del nodeToRemove
@@ -86,7 +85,7 @@ class LinkedList:
         return -1
 
 
-    def getAt(self, position, count=1):
+    def getNodeAt(self, position, count=1):
         temp = self.head 
         if position > self.length: return None
         else:
@@ -132,7 +131,7 @@ class LinkedList:
         self.head = previousNode
 
 
-    def reverseRecursive(self):
+    def recursiveReverse(self):
         self._recursiveReverse(None, self.head, self.head.next)
     #METHODS
 
@@ -262,7 +261,7 @@ class DoublyLinkedList:
         self.length -= 1
     def removeHead(self):
         self.removeAt(0)
-    def removeAtTail(self):
+    def removeTail(self):
         self.remoteAt(self.length - 1)
     def getNodeAt(self, position):
         if position >= self.length: return
@@ -329,23 +328,161 @@ class DoublyLinkedList:
 
 #CIRCULAR LINKED LIST
 class CircularLinkedList:
+    #NODE
+    class Node:
+        def __init__(self, value, next):
+            self.value = value
+            self.next = next
+
+
+        def __str__(self):
+            return str(self.value)
+    #NODE
+
+
     #CONSTRUCTOR
     def __init__(self):
         self.head = None
         self.length = 0
+        self.tail = None
     #CONSTRUCTOR
 
 
     #METHODS
+    def insertAt(self, position, value):
+        if position < 0 or position > self.length:
+            print('INVALID POSITION')
+            return
+        elif self.length is 1 and position <= 1:
+            if position is 0:
+                newNode = self.Node(value, self.head)
+                self.tail = self.head
+                self.head = newNode
+
+                self.tail.next = self.head
+            elif position is 1:
+                newNode = self.Node(value, self.head)
+                self.head.next = newNode
+                self.tail = newNode
+        elif position is 0:
+            if self.length == 0:
+                newNode = self.Node(value, None)
+                newNode.next = None
+                self.head = newNode
+            else:
+                newNode = self.Node(value, self.head)
+                self.tail.next = newNode
+                self.head = newNode
+        elif position is self.length - 1:
+            prev = self.getNodePosition(position - 1)
+            newNode = self.Node(value, self.tail)
+            prev.next = newNode
+        elif position is self.length:
+            prev = self.tail
+            newNode = self.Node(value, self.head)
+            prev.next = newNode
+            self.tail = newNode
+        else:
+            previous = self.getNodeAt(position - 1)
+            next = previous.next
+            newNode = self.Node(value, next)
+            previous.next = newNode
+
+        self.length += 1
+
+
+    def insertAtHead(self, value):
+        self.insertAt(0, value)
+
+
+    def insertAtTail(self, value):
+        self.insertAt(self.length, value)
+
+
+    def remove(self, node):
+        position = self.getNodePosition(node)
+        self.removeAt(position)
+    def removeAt(self, position):
+        if position is 0:
+            nodeToRemove = self.head
+            self.head = self.head.next
+        elif position is self.length - 1:
+            prevNode = self.getNodeAt(position - 1)
+            nodeToRemove = prevNode.next
+            prevNode.next = None
+        else:
+            node = self.getNodeAt(position - 1)
+            nodeToRemove = node.next
+            node.next = nodeToRemove.next
+        del nodeToRemove
+        self.length -= 1
+
+    def removeHead(self):
+        self.removeAt(0)
+
+
+    def removeTail(self):
+        self.removeAt(self.length - 1)
+
+
+    def getNodeAt(self, position):
+        if position >= self.length: return
+        else:
+            temp = self.head
+            for _ in range(position):
+                temp = temp.next
+            return temp
+
+
+    def getNodePosition(self, node):
+        temp = self.head
+        for i in range(self.length - 1):
+            if temp is node:
+                return i
+            temp = temp.next
+        return
+
+
+    def isEmpty(self):
+        return self.length == 0
+
+
+    def reverse(self):
+        pass
+
+
+    def recursiveReverse(self):
+        self._recursiveReverse(None, self.head, self.head.next)
     #METHODS
+
+
+    #PRIVATE METHODS
+    def _recursiveReverse(self, previous, current, next):
+        if self.head == None: 
+            return
+        elif current is self.head:
+            next = current.next
+            current.next = self.tail
+            self._recursiveReverse(current, next, next.next)
+        elif current is self.tail:
+            current.next = previous
+            self.head.next = self.tail
+            self.tail = self.head
+            self.head = current
+            return
+        else:
+            current.next = previous
+            self._recursiveReverse(current, next, next.next)
+    #PRIVATE METHODS
 
 
     #MAGICAL METHODS
     def __str__(self):
         temp = self.head
-        while temp is not None:
-            print(temp.value, end=('\n' if temp.next is None else ' -> '))
+        while True:
+            print(temp.value, end=('\n' if temp.next is self.head else ' -> '))
             temp = temp.next
+            if temp is self.head: break
         return ''
     def __len__(self):
         return self.length

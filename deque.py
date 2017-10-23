@@ -25,7 +25,7 @@ class ADeque:
         for _ in range(count):
             self.data.pop()
 
-    def isEmpty(self, value): 
+    def isEmpty(self): 
         return len(self.data) == 0
 
     def peekFront(self, value): 
@@ -97,17 +97,24 @@ class LDeque:
 class Queue:
     #CONSTRUCTOR
     def __init__(self):
-        self.datastore = []
+        self.data = ADeque()
     #CONSTRUCTOR
 
     #METHODS
-    def pushFront(self, value): pass
-    def pushBack(self, value): pass
-    def popFront(self): pass
-    def popBack(self): pass
-    def isEmpty(self, value): pass
-    def peekFront(self, value): pass
-    def peekBack(self, value): pass
+    def enqueue(self, value): 
+        self.data.pushBack(value)
+
+    def dequeue(self): 
+        self.data.popFront()
+
+    def isEmpty(self): 
+        return self.data.isEmpty()
+
+    def peek(self, value): 
+        return self.data.peekFront(value)
+
+    def getSize(self):
+        return self.data.getSize()
     #METHODS
 #QUEUE
 

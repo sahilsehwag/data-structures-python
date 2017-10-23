@@ -1,10 +1,22 @@
 # INTRODUCTION
-In this repo I implement various data structures that I have learnt, learning or will learn. 
-Note that these are not production grade implementations.
-They are educational implementation of various data structures that can be referenced by those who want to learn and implement data structures.
+
+In this repo I implement various different *Data Structures* and their
+respective algorithms. If you want to learn or refer to algorithms. Look
+at this [repository](https://github.com/sahilsehwag/algorithms-in-python
+"repository").
 
 
-# LINKED LIST
-## Singly Linked List
-## Doubly Linked List
-## Circular Linked List
+## LINKED LIST
+### Singly Linked List
+### Doubly Linked List
+### Circular Linked List
+
+
+## TREE
+### Binary Search Tree
+
+
+## DEQUE
+### *Array* Implementation of Deque
+### *LinkedList* Implementation of Deque
+### Queue

@@ -7,19 +7,43 @@ from linkedlist import DoublyLinkedList
 class ADeque:
     #CONSTRUCTOR
     def __init__(self):
-        self.datastore = []
+        self.data = []
     #CONSTRUCTOR
 
     #METHODS
-    def pushFront(self, value): pass
-    def pushBack(self, value): pass
-    def popFront(self, count=1): pass
-    def popBack(self, count=1): pass
-    def isEmpty(self, value): pass
-    def peekFront(self, value): pass
-    def peekBack(self, value): pass
-    def pushFrontAll(self, values): pass
-    def pushBackAll(self, values): pass
+    def pushFront(self, value): 
+        self.data.insert(0, value)
+
+    def pushBack(self, value): 
+        self.data.append(value)
+
+    def popFront(self, count=1): 
+        for _ in range(count):
+            del self.data[0]
+
+    def popBack(self, count=1): 
+        for _ in range(count):
+            self.data.pop()
+
+    def isEmpty(self, value): 
+        return len(self.data) == 0
+
+    def peekFront(self, value): 
+        return self.data[0]
+
+    def peekBack(self, value): 
+        return self.data[len(self.data)]
+
+    def pushFrontAll(self, values):
+        for value in values:
+            self.pushFront(value)
+
+    def pushBackAll(self, values): 
+        for value in values:
+            self.pushBack(value)
+
+    def getSize(self):
+        return len(self.data)
     #METHODS
 #ARRAY DEQUE
 
